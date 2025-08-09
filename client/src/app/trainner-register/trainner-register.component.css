@@ -1,0 +1,95 @@
+.gym-background {
+  background-image: url('../../assets/images/1.jpg');
+  background-size: cover;        /* Ensures it covers without stretching */
+  background-position: center;   /* Keeps it centered */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  height: 100vh;                 /* Full screen height */
+  width: 100%;                   /* Full width */
+}
+
+/* Full-page background with athletic gym feel */
+.trainner-register-form {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 15px;
+}
+
+/* Card styling */
+.trainner-register-form .card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.6s ease;
+}
+
+/* Heading */
+.trainner-register-form h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  color: #2c3e50;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+/* Input styling */
+.input-styled {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-styled:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+  outline: none;
+}
+
+/* Date input consistency */
+input[type="date"].input-styled {
+  padding: 10px 12px;
+}
+
+/* Button styling */
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .trainner-register-form .card {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .trainner-register-form h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

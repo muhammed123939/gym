@@ -1,0 +1,129 @@
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top {{navname}}">
+
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLinkActive="active" routerLink="/">GYM App</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul style="margin-left: 15%;" class="navbar-nav me-auto mb-2 mb-md-0">
+
+        @if(isLoggedIn()){
+        <li class="nav-item">
+          <span style="font-size: 30px; color: whitesmoke; margin-left:-150px ; margin-right: 25px ;"> {{name}}</span>
+        </li>
+        }
+
+        @if (trainnerService.currentTrainner()) {
+        <li class="nav-item">
+          <a routerLink="/appointmentList" routerLinkActive="active" class="nav-link text-uppercase">Appointments</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/clientlist" routerLinkActive="active" class="nav-link text-uppercase">Clients</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/edittrainner" routerLinkActive="active" class="nav-link text-uppercase">Edit-profile</a>
+        </li>
+
+        <li class="nav-item">
+          <a (click)="logouttrainner()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
+            Log Out
+          </a>
+        </li>
+        }
+
+        @if (clientService.currentClient()) {
+        <li class="nav-item">
+          <a routerLink="/appointmentList" routerLinkActive="active" class="nav-link text-uppercase">Appointments</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/editclient" routerLinkActive="active" class="nav-link text-uppercase">Edit-profile</a>
+        </li>
+        <li class="nav-item">
+          <a (click)="logoutclient()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
+            Log Out
+          </a>
+        </li>
+        }
+
+        @if (adminService.currentAdmin()) {
+        <li class="nav-item">
+          <a routerLink="/adminlist" routerLinkActive="active" class="nav-link text-uppercase">Admins</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/trainnerlist" routerLinkActive="active" class="nav-link text-uppercase">Trainners</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/clientlist" routerLinkActive="active" class="nav-link text-uppercase">Clients</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/classeslist" routerLinkActive="active" class="nav-link text-uppercase">Classes</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/appointmentList" routerLinkActive="active" class="nav-link text-uppercase">Appointments</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/editadmin/{{adminService.currentAdmin()?.id}}"
+            class="nav-link text-uppercase">Edit-profile</a>
+        </li>
+
+        <li class="nav-item">
+          <a (click)="logout()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
+            Log Out
+          </a>
+        </li>
+        }
+      </ul>
+
+      <div style="margin-right: 25%;" class="login-forms d-flex align-items-start gap-3 text-white"
+        *ngIf="!trainnerService.currentTrainner() && !adminService.currentAdmin() && !clientService.currentClient()">
+
+        <!-- User Type Dropdown -->
+        <div style="margin-top: 5px;" class="login-selection">
+          <label for="userType" class="form-label mb-1" style="font-size: 0.9rem;">Choose user type :</label>
+          <select id="userType" [(ngModel)]="selectedUserType" class="form-select form-select-sm">
+            <option value="admin">Admin</option>
+            <option value="trainner">Trainner</option>
+            <option value="client">Client</option>
+          </select>
+        </div>
+<div style="margin-left: 5px;" >
+        <form *ngIf="selectedUserType === 'trainner'" #trainnerForm="ngForm" (ngSubmit)="logintrainner()"
+          class="login-form d-flex align-items-center gap-2" autocomplete="off">
+          <input name="Name" [(ngModel)]="modeltrainner.Name" class="form-control form-control-sm w-auto"
+            placeholder="Trainner Name">
+          <input name="Password" [(ngModel)]="modeltrainner.Password" class="form-control form-control-sm w-auto"
+            placeholder="Password" type="password">
+          <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
+        </form>
+
+        <form *ngIf="selectedUserType === 'client'" #ClientForm="ngForm" (ngSubmit)="loginclient()"
+          class="login-form d-flex align-items-center gap-2" autocomplete="off">
+          <input name="Name" [(ngModel)]="modelclient.Name" class="form-control form-control-sm w-auto"
+            placeholder="Client Name">
+          <input name="Password" [(ngModel)]="modelclient.Password" class="form-control form-control-sm w-auto"
+            placeholder="Password" type="password">
+          <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
+        </form>
+
+        <form *ngIf="selectedUserType === 'admin'" #adminForm="ngForm" (ngSubmit)="login()"
+          class="login-form d-flex align-items-center gap-2" autocomplete="off">
+          <input name="Name" [(ngModel)]="model.Name" class="form-control form-control-sm w-auto"
+            placeholder="Admin Name">
+          <input name="Password" [(ngModel)]="model.Password" class="form-control form-control-sm w-auto"
+            placeholder="Password" type="password">
+          <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
+        </form>
+  
+</div>
+  
+      </div>
+    </div>
+  </div>
+</nav>

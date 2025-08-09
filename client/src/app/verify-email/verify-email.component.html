@@ -1,0 +1,9 @@
+<div style="margin-top: 20%;" class="text-center">
+  <div *ngIf="loading">
+    <p>Verifying your email...</p>
+  </div>
+  <div *ngIf="!loading">
+    <h3>{{ message }}</h3>
+    <h3>login if verified </h3>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="gym-background">
+
+  <h2 style="margin-top:4%;" class="text-center text-primary mb-4">Add Appointment</h2>
+<form style=" width: 50%;" [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off"
+    class="container p-4 border rounded shadow-sm bg-light">
+
+
+    <hr>
+    <!-- Hidden Admin ID -->
+    <input type="hidden" [formControl]="$any(registerForm.controls['adminId'])">
+    <div *ngIf="schedule.length > 0" class="mt-4">
+        <h5 class="text-secondary">Trainner's Schedule:</h5>
+        <ul class="list-group">
+          <li *ngFor="let s of schedule" class="list-group-item">
+            <strong>{{ dayNames[+s.dayOfWeek] }}:</strong>
+            {{ s.startTime }} - {{ s.endTime }}
+          </li>
+        </ul>
+      </div>
+      
+      
+    <!-- Choose Trainner -->
+    <div class="mb-3">
+        <select id="trainnerId" class="form-select" formControlName="trainnerId" (change)="onTrainnerChange($event)">
+            <option value="" disabled>-- Select a Trainner --</option>
+            <option *ngFor="let trainner of trainners" [value]="trainner.id">
+              {{ trainner.name }} = {{ trainner.trainnerPrice }}
+            </option>
+          </select>
+    </div>
+
+        <!-- Choose class -->
+    <div class="mb-3">
+        <select id="classId" class="form-select" formControlName="classId">
+            <option value="" disabled>-- Select a Class --</option>
+            <option *ngFor="let class of classess" [value]="class.id">
+              {{ class.name }}
+            </option>
+          </select>
+    </div>
+    <!-- Choose client -->
+    <div class="mb-3">
+        <select id="clientId" class="form-select" [formControl]="$any(registerForm.controls['clientId'])">
+            <option value="" disabled selected>-- Select a Client --</option>
+            @for (client of clients; track $index) {
+            <option value={{client.id}}>{{client.name}}</option>
+            }
+        </select>
+    </div>
+
+    <div *ngIf="$any(registerForm.controls['date']).errors?.['dateInPast'] && $any(registerForm.controls['date']).touched"
+        class="text-danger">
+        Date cannot be in the past.
+    </div>
+
+    <!-- Date -->
+    <div class="mb-3">
+        <input id="date" class="form-control" type="date" [formControl]="$any(registerForm.controls['date'])">
+    </div>
+
+    <!-- Time -->
+    <div class="mb-3">
+        <input id="time" class="form-control" type="time" step="1" [formControl]="$any(registerForm.controls['time'])">
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button [disabled]="!registerForm.valid" class="btn btn-success px-4" type="submit">Register</button>
+    </div>
+
+    <!-- Debugging Information -->
+    <hr>
+    <p><strong>Register Value:</strong> {{ registerForm.value | json }}</p>
+    <p><strong>Register Status:</strong> {{ registerForm.status | json }}</p>
+
+</form>
+</div>

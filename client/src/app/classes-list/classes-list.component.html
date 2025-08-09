@@ -1,0 +1,26 @@
+
+
+<div class="gym-background">
+
+<button class="btn btn-primary add-class-button" style="margin-top: 4%;" (click)="signup()">Add Class</button>
+
+<table class="table gym-table table-striped table-bordered table-hover mt-4" *ngIf="classes">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Class ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let class of classes; let i = index">
+      <td>{{ class.id }}</td>
+      <td>{{ class.name }}</td>
+      <td>
+        <button class="btn btn-warning btn-sm me-2" (click)="edititem(class)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteitem(class)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

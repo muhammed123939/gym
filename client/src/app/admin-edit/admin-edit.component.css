@@ -1,0 +1,95 @@
+.gym-edit-form {
+  width: 50%;
+  margin: 4% auto;
+  background-color: #1f1f1f;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  color: #f1f1f1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.form-title {
+  text-align: center;
+  color: #ffc107; /* gold accent */
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.divider {
+  border-top: 2px solid #ffc107;
+  width: 60%;
+  margin: 0 auto 1.5rem auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+input.form-control {
+  background-color: #2d2d2d;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+input.form-control:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);
+  background-color: #3b3b3b;
+}
+
+.btn-save {
+  background-color: #28a745;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  color: white;
+  transition: 0.3s;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn-save:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.btn-save:hover:enabled {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.error-msg {
+  color: #ff4d4f;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.debug {
+  margin-top: 2rem;
+  background-color: #292929;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+.gym-background {
+  background-image: url('../../assets/images/1.jpg');
+  background-size: cover;        /* Ensures it covers without stretching */
+  background-position: center;   /* Keeps it centered */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  height: 91vh;                 /* Full screen height */
+  width: 100%;                   /* Full width */
+}
+

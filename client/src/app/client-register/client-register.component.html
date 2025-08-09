@@ -1,0 +1,99 @@
+<div class="gym-background">
+
+  <h2 style="margin-top:4%;" class="text-center text-primary">Sign Up for Client</h2>
+  <form class="container" [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off"
+    style="max-width: 500px;">
+
+    <hr />
+
+    <!-- Name -->
+    <div class="mb-3">
+      <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter your name" />
+      <div *ngIf="registerForm.controls['name'].touched && registerForm.controls['name'].invalid"
+        class="text-danger small">
+        <small *ngIf="registerForm.controls['name'].errors?.['required']">Name is required.</small>
+        <small *ngIf="registerForm.controls['name'].errors?.['minlength']">Name must be at least 3 characters.</small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label fw-semibold">Email</label>
+      <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email" />
+
+      <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].invalid"
+        class="text-danger small mt-1">
+        <small *ngIf="registerForm.controls['email'].errors?.['required']">Email is required.</small>
+        <small *ngIf="registerForm.controls['email'].errors?.['email']">Invalid email format.</small>
+        <small *ngIf="registerForm.controls['email'].errors?.['invalidEmailFormat']">Please enter a valid email with
+          domain.</small>
+      </div>
+    </div>
+
+
+    <!-- Gender -->
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender</label><br>
+      <select id="gender" formControlName="gender" class="form-select">
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <div *ngIf="registerForm.controls['gender'].touched && registerForm.controls['gender'].invalid"
+        class="text-danger small">
+        <small>Gender is required.</small>
+      </div>
+    </div>
+
+    <!-- Mobile -->
+    <div class="mb-3">
+      <input id="mobile" formControlName="mobile" type="text" class="form-control"
+        placeholder="Enter your mobile number" />
+      <div *ngIf="registerForm.controls['mobile'].touched && registerForm.controls['mobile'].invalid"
+        class="text-danger small">
+        <small *ngIf="registerForm.controls['mobile'].errors?.['required']">Mobile is required.</small>
+        <small *ngIf="registerForm.controls['mobile'].errors?.['pattern']">Invalid mobile number format.</small>
+      </div>
+    </div>
+
+
+    <!-- Birthdate -->
+    <div class="mb-3">
+      <label for="dateOfBirth" class="form-label">Date Of Birth</label>
+      <input id="dateOfBirth" formControlName="dateOfBirth" type="date" class="form-control" />
+      <div *ngIf="registerForm.controls['dateOfBirth'].touched && registerForm.controls['dateOfBirth'].invalid"
+        class="text-danger small">
+        <small>Birthdate is required.</small>
+      </div>
+    </div>
+
+    <!-- National ID -->
+    <div class="mb-3">
+      <input id="nationalnumber" formControlName="nationalnumber" type="text" class="form-control"
+        placeholder="Enter your National ID" />
+      <div *ngIf="registerForm.controls['nationalnumber'].touched && registerForm.controls['nationalnumber'].invalid"
+        class="text-danger small">
+        <small *ngIf="registerForm.controls['nationalnumber'].errors?.['required']">National ID is required.</small>
+        <small *ngIf="registerForm.controls['nationalnumber'].errors?.['invalidFormat']">National ID must be exactly 14
+          digits.</small>
+        <small *ngIf="registerForm.controls['nationalnumber'].errors?.['invalidCentury']">Invalid century in National
+          ID.</small>
+        <small *ngIf="registerForm.controls['nationalnumber'].errors?.['invalidDate']">Invalid date in National
+          ID.</small>
+      </div>
+    </div>
+
+    <!-- Hidden Admin ID -->
+    <input type="hidden" formControlName="adminId" />
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-success w-100" [disabled]="!registerForm.valid">
+        Register
+      </button>
+    </div>
+
+    <!-- Debug Info -->
+    <p class="mt-3">Register value: {{ registerForm.value | json }}</p>
+    <p>Register status: {{ registerForm.status | json }}</p>
+  </form>
+</div>

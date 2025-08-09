@@ -1,0 +1,62 @@
+body {
+  background-color: #111; /* dark gym vibe */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+form.container {
+  background-color: #1a1a1a;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,255,0,0.2);
+  border: 1px solid #444;
+}
+
+h2.text-primary {
+  color: #0f0; /* neon green */
+  font-weight: 700;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #ccc;
+}
+
+.form-control {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.form-control:focus {
+  border-color: #0f0;
+  box-shadow: 0 0 5px #0f0;
+  background-color: #111;
+}
+
+.btn-success {
+  background-color: #0f0;
+  color: #111;
+  font-weight: bold;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #0c0;
+  color: #fff;
+  box-shadow: 0 0 10px #0f0;
+}
+
+.mt-3 p {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+.gym-background {
+  background-image: url('../../assets/images/1.jpg');
+  background-size: cover;        /* Ensures it covers without stretching */
+  background-position: center;   /* Keeps it centered */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  height: 91vh;                 /* Full screen height */
+  width: 100%;                   /* Full width */
+}
+

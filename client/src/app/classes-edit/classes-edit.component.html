@@ -1,0 +1,38 @@
+
+<div class="gym-background">
+
+@if(selectedclass)
+{
+<form style="margin-top:35%;" id="editForm" class="container mt-5" [style]="" #editForm="ngForm" (ngSubmit)="edit()">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center text-primary mt-4">
+                <i class="fas fa-dumbbell"></i> Edit Class
+            </h2>
+
+
+            <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input readonly="true" type="number" [(ngModel)]="selectedclass.id" name="id" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="string" [(ngModel)]="selectedclass.name" name="name" class="form-control">
+            </div>
+
+            <div class="mt-3">
+                <p>Form Value: {{editForm.value | json}}</p>
+                <p>Form Status: {{editForm.status | json}}</p>
+            </div>
+
+            <!-- Save Button -->
+            <div class="text-center mt-4">
+                <button [disabled]="!editForm.dirty" type="submit" class="btn btn-success px-5">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+}</div>

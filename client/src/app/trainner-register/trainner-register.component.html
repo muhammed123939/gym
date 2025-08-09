@@ -1,0 +1,33 @@
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<div class="gym-background">
+
+  <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off" class="trainner-register-form">
+
+    <div style="width: 30%;" class="container mt-5">
+      <div class="card shadow-lg rounded p-4 border-0">
+        <h2 class="text-center text-primary">Sign Up for Trainner</h2>
+        <hr>
+        <input type="hidden" [formControl]="$any(registerForm.controls['adminId'])">
+        <div class="mb-2">
+          <app-text-input [formControl]="$any(registerForm.controls['trainnername'])" [label]="'Trainner Name'"
+            class="form-control border-light input-styled">
+          </app-text-input>
+        </div>
+
+        <div class="mb-2">
+          <label for="dateOfBirth" class="form-label fw-semibold">Date of Birth</label>
+          <input id="dateOfBirth" [formControl]="$any(registerForm.controls['dateOfBirth'])" type="date"
+            class="form-control border border-2 shadow-sm input-styled">
+        </div>
+
+        <div class="text-center">
+          <button [disabled]="!registerForm.valid" class="btn btn-success px-4 py-2 rounded-pill shadow-sm"
+            type="submit">
+            Register
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

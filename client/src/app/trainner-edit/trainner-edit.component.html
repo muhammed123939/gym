@@ -1,0 +1,102 @@
+
+<div class="gym-background">
+
+@if (selecteduser) {
+<div class="d-flex justify-content-center">
+  <div class="gym-container w-75 d-flex flex-wrap align-items-start gap-4">
+
+    <!-- Image -->
+    <div class="text-center">
+      <img class="rounded-circle border border-secondary" style="width: 200px; height: 200px; object-fit: cover;"
+        src="{{myphotos[0]?.url || './assets/user.png'}}" alt="User Image">
+    </div>
+
+    <!-- Form -->
+    <form id="editForm" class="flex-grow-1" style="margin-left:180px;margin-top: 50px;" #editForm="ngForm" (ngSubmit)="edit()">
+      <h2 class="text-center text-warning mb-4">Edit Trainer</h2>
+
+      <div class="mb-3">
+        <label class="gym-form-label">Name:</label>
+        <input type="hidden" [(ngModel)]="selecteduser.id" name="id">
+        <input type="text" class="form-control gym-input" [(ngModel)]="selecteduser.name" name="name" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="gym-form-label">Date of Birth:</label>
+        <input type="datetime-local" name="dateOfBirth" [(ngModel)]="selecteduser.dateOfBirth"
+          class="form-control gym-input">
+      </div>
+
+      @if (trainnerservice.currentTrainner()) {
+      <div class="mb-3">
+        <label class="gym-form-label">Password:</label>
+        <input type="password" class="form-control gym-input" [(ngModel)]="selecteduser.password"
+          (ngModelChange)="passwordTouched = true" name="password">
+      </div>
+
+      <div class="mb-3" *ngIf="passwordTouched">
+        <label class="gym-form-label">Confirm Password:</label>
+        <input type="password" class="form-control gym-input" [(ngModel)]="confirmPassword" name="confirmPassword">
+        <div *ngIf="selecteduser.password !== confirmPassword && confirmPassword" class="text-danger mt-1">
+          Passwords do not match.
+        </div>
+      </div>
+      }
+
+      <div class="mb-3">
+        <label class="gym-form-label">Trainer Price:</label>
+        <input type="number" class="form-control gym-input" [(ngModel)]="selecteduser.trainnerPrice"
+          name="trainnerPrice">
+      </div>
+
+      <div class="mb-3">
+        <label class="gym-form-label">Classes:</label>
+        <div *ngFor="let c of allClasses" class="form-check text-light">
+          <input type="checkbox" class="form-check-input" [id]="'class_' + c.id" [value]="c.id"
+            [checked]="selectedClassIds.includes(c.id)" (change)="onClassCheckboxChange($event, c.id)" />
+          <label class="form-check-label" [for]="'class_' + c.id">
+            {{ c.name }}
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="gym-form-label">Available Days:</label>
+        <div class="d-flex flex-wrap gap-3 text-light">
+          <div *ngFor="let day of [0,1,2,3,4,5,6]">
+            <input type="checkbox" [value]="day" (change)="onDayCheckboxChange($event)"
+              [checked]="availableDays.includes(day)" />
+            {{ ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][day] }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3" *ngFor="let day of availableDays">
+        <label class="gym-form-label">
+          {{ ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][day] }} Hours:
+        </label>
+        <div class="d-flex gap-2">
+          <input type="time" class="form-control gym-input" [(ngModel)]="schedulePerDay[day].startTime"
+            [name]="'startTime' + day" />
+          <input type="time" class="form-control gym-input" [(ngModel)]="schedulePerDay[day].endTime"
+            [name]="'endTime' + day" />
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" [disabled]="!(hasBasicChanges() || hasScheduleChanges()) || (passwordTouched && selecteduser.password !== confirmPassword)"
+          class="gym-btn">
+          Save Changes
+        </button>
+      </div>
+
+      @if (trainnerservice.currentTrainner()) {
+      <div class="mt-4">
+        <app-photo-editor></app-photo-editor>
+      </div>
+      }
+    </form>
+  </div>
+</div>
+}
+</div>

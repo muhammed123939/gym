@@ -1,0 +1,38 @@
+<div class="gym-background">
+
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off" class="d-flex justify-content-center align-items-center">
+    <div class="card p-5 shadow-lg rounded-4" style="width: 100%; max-width: 500px; border: none; margin-top: 5%;">
+      <h2 class="text-center text-primary fw-bold mb-4">Admin Registration</h2>
+      <hr class="mb-4">
+  
+      <app-text-input 
+        [formControl]="$any(registerForm.controls['adminname'])"
+        [label]="'Admin Name'"
+        class="form-control mb-4 border-0">
+      </app-text-input>
+  
+      <app-text-input 
+        [formControl]="$any(registerForm.controls['adminpassword'])"
+        [label]="'Password'"
+        [type]="'password'"
+        class="form-control mb-4 border-0">
+      </app-text-input>
+  
+      <app-text-input 
+        [formControl]="$any(registerForm.controls['confirmPassword'])"
+        [label]="'Confirm Password'"
+        [type]="'password'"
+        class="form-control mb-4 border-0">
+      </app-text-input>
+  
+      <div class="text-center mt-4">
+        <button 
+          [disabled]="!registerForm.valid"
+          class="btn btn-primary px-4 py-2 rounded-pill shadow-sm fw-semibold"
+          type="submit">
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
+  </div>

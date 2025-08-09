@@ -1,0 +1,21 @@
+<div class="gym-background">
+
+<form style="width: 50%; margin-top:4%;" [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off" class="container p-4 border rounded shadow-sm bg-light">
+    <h2 class="text-center text-primary mb-4">Add Class</h2>
+    <hr>
+
+    <div class="mb-3">
+        <input placeholder="Name" type="text" id="name" class="form-control"  [formControl]="$any(registerForm.controls['name'])">
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button [disabled]="!registerForm.valid" class="btn btn-success px-4" type="submit">Register</button>
+    </div>
+
+    <!-- Debugging Information -->
+    <hr>
+    <p><strong>Register Value:</strong> {{ registerForm.value | json }}</p>
+    <p><strong>Register Status:</strong> {{ registerForm.status | json }}</p>
+</form>
+</div>

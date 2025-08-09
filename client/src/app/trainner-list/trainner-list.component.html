@@ -1,0 +1,53 @@
+
+<div class="gym-background">
+
+<button class="btn btn-primary add-trainer-button" style="margin-top:4%;" (click)="signuptrainner()">Add Trainer</button>
+
+<table class="table gym-table table-striped table-bordered table-hover mt-4" *ngIf="trainners">
+  <thead class="table-dark">
+    <tr>
+      <th>Trainer ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Class Name</th>
+      <th>Trainer Price</th>
+      <th>Admin Name</th>
+      <th>Photo</th>
+      <th>Schedule</th>
+      <th *ngIf="adminservice.currentAdmin()?.cando">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let trainner of trainners; let i = index">
+      <th>{{ trainner.id }}</th>
+      <td>{{ trainner.name }}</td>
+      <td>{{ trainner.age }}</td>
+      <td>
+        <ul class="mb-0">
+          <li *ngFor="let cls of trainner.classList">{{ cls.name }}</li>
+        </ul>
+      </td>
+      <td>{{ trainner.trainnerPrice }} EGP</td>
+      <td>{{ adminadded[i]?.name }}</td>
+      <td>
+        <img class="trainer-photo" [src]="photos[i]?.url || './assets/user.png'" [alt]="trainner.name" />
+      </td>
+      <td>
+        <ul class="list-group schedule-list" *ngIf="trainnerSchedulesMap[trainner.id]">
+          <ng-container *ngFor="let group of groupSchedulesByTime(trainnerSchedulesMap[trainner.id]) | keyvalue">
+            <li class="list-group-item">
+              <strong>{{ group.key }}:</strong> {{ group.value.join(', ') }}
+            </li>
+          </ng-container>
+        </ul>
+      </td>
+      <td *ngIf="adminservice.currentAdmin()?.cando">
+        <button class="btn btn-outline-light btn-sm me-2" (click)="appointments(trainner.id)">Appointments</button>
+        <button class="btn btn-warning btn-sm me-2" (click)="edititem(trainner)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteitem(trainner)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

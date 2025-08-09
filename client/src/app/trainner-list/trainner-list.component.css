@@ -1,0 +1,103 @@
+body {
+  background-color: #1c1c1c;
+  color: #f0f0f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-trainer-button {
+  display: block;
+  margin: 3rem auto 2rem auto;
+  background-color: #ff4136;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.add-trainer-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.gym-table {
+  width: 90%;
+  margin: auto;
+  background-color: #292929;
+  border: none;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+.gym-table thead {
+  background-color: #111;
+  color: #ffd60a;
+  text-transform: uppercase;
+}
+
+.gym-table th,
+.gym-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 1rem;
+  border: 1px solid #444;
+}
+
+.gym-table tbody tr:hover {
+  background-color: #333;
+  cursor: pointer;
+}
+
+.trainer-photo {
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  object-fit: cover;
+  border: 2px solid #ffd60a;
+}
+
+/* Schedule list style */
+.schedule-list {
+  padding: 0;
+  background-color: transparent;
+}
+
+.schedule-list .list-group-item {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Button overrides */
+.btn {
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-outline-light {
+  border: 1px solid #ffd60a;
+  color: #ffd60a;
+  background-color: transparent;
+}
+
+.btn-outline-light:hover {
+  background-color: #ffd60a;
+  color: #111;
+}
+.gym-background {
+  background-image: url('../../assets/images/2.jpg');
+  background-size: cover;        /* Ensures it covers without stretching */
+  background-position: center;   /* Keeps it centered */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  height: 91vh;                 /* Full screen height */
+  width: 100%;                   /* Full width */
+}

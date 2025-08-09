@@ -1,0 +1,154 @@
+/* Overall Page Styling */
+.gym-background {
+  background-image: url('../../assets/images/2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  color: #f0f0f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem 0;
+}
+
+/* Add Client Button */
+.add-client-button {
+  display: block;
+  margin: 3rem auto 2rem auto;
+  background-color: #ff4136; /* Bold red */
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.add-client-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Placeholder text for inputs and textarea */
+.search-bar input::placeholder,
+textarea.form-control::placeholder {
+  color: #aaa; /* Light gray for visibility */
+  opacity: 1;  /* Ensure it's not transparent */
+}
+
+/* Search & Offer Fields */
+.search-bar input,
+textarea.form-control {
+  background-color: #1f1f1f;
+  border: 1px solid #444;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.search-bar input:focus,
+textarea.form-control:focus {
+  border-color: #ffd60a;
+  box-shadow: 0 0 8px rgba(255, 214, 10, 0.5);
+}
+
+/* Table Styling */
+.gym-table {
+  width: 90%;
+  margin: auto;
+  background-color: #292929;
+  border: none;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+.gym-table thead {
+  background-color: #111;
+  color: #ffd60a;
+  text-transform: uppercase;
+}
+
+.gym-table th,
+.gym-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 1rem;
+  border: 1px solid #444;
+}
+
+.gym-table tbody tr:hover {
+  background-color: #333;
+  cursor: pointer;
+}
+
+/* Photo inside table */
+.client-photo {
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border: 2px solid #ffd60a;
+}
+
+/* Action Buttons */
+.btn {
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border: none;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #bb2d3b;
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 10px;
+  background-color: #1f1f1f;
+  color: white;
+  border: 1px solid #444;
+}
+
+.modal-header {
+  border-bottom: 1px solid #333;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.modal-body img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 6px;
+  border: 2px solid #444;
+}
+
+.btn-close-white {
+  filter: invert(1);
+}

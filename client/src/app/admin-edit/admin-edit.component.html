@@ -1,0 +1,62 @@
+<div class="gym-background">
+
+@if(selecteduser)
+{
+  <form id="editForm" class="gym-edit-form" #editForm="ngForm" (ngSubmit)="edit()">
+    <div class="form-container">
+      <h2 class="form-title">Edit Admin</h2>
+      <hr class="divider">
+
+      <input type="hidden" [(ngModel)]="selecteduser.id" name="id" />
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" [(ngModel)]="selecteduser.name" name="name" id="name" required class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="selecteduser.password"
+          (ngModelChange)="passwordTouched = true"
+          id="password"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group" *ngIf="passwordTouched">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          id="confirmPassword"
+          class="form-control"
+          required
+        />
+        <div *ngIf="selecteduser.password !== confirmPassword && confirmPassword" class="error-msg">
+          Passwords do not match.
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button
+          [disabled]="!editForm.dirty || (passwordTouched && selecteduser.password !== confirmPassword)"
+          type="submit"
+          class="btn-save"
+        >
+          Save Changes
+        </button>
+      </div>
+
+      <!-- Optional: Debug info -->
+      <div class="debug">
+        <p>Form value: {{ editForm.value | json }}</p>
+        <p>Form status: {{ editForm.status | json }}</p>
+      </div>
+    </div>
+  </form>
+}
+</div>

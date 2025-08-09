@@ -1,0 +1,77 @@
+/* General Form Styling */
+.gym-background {
+  background-image: url('../../assets/images/1.jpg');
+  background-size: cover;        /* Ensures it covers without stretching */
+  background-position: center;   /* Keeps it centered */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  height: 91vh;                 /* Full screen height */
+  width: 100%;                   /* Full width */
+}
+form.container {
+    background-color: #ffffff;
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 2rem;
+    margin-bottom: 5rem;
+  }
+  
+  /* Headline */
+  h2 {
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Input fields */
+  .form-control,
+  .form-select {
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+    outline: none;
+  }
+  
+  /* Label styling */
+  label.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-size: 0.95rem;
+  }
+  
+  /* Validation message */
+  .text-danger small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Submit button */
+  button[type="submit"] {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 2rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #198754;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(25, 135, 84, 0.3);
+  }
+  
+  /* Debug info */
+  p {
+    font-size: 0.85rem;
+    color: #6c757d;
+    word-break: break-word;
+  }
+  

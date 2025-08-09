@@ -1,0 +1,135 @@
+<div class="gym-background">
+
+    @if(selectedappointment)
+    {
+
+    <form style="margin-top:4%;" id="editForm" class="container" #editForm="ngForm" (ngSubmit)="edit()">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center text-primary mb-4">Edit Appointment</h2>
+
+                @if(adminService.currentAdmin())
+                {
+                <!-- Hidden Inputs -->
+                <input type="hidden" [(ngModel)]="selectedappointment.id" name="id">
+                <input type="hidden" [(ngModel)]="selectedappointment.adminId" name="adminId">
+                <input type="hidden" [(ngModel)]="selectedappointment.trainnerId" name="trainnerId">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientId" name="clientId">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientcomment" name="clientcomment">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientcase" name="clientcase">
+
+                <!-- Date Input -->
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" [(ngModel)]="selectedappointment.date" name="date" id="date" class="form-control"
+                        required>
+                </div>
+
+                <!-- Time Input -->
+                <div class="mb-3">
+                    <label for="time" class="form-label">Time</label>
+                    <input type="time" step="1" [(ngModel)]="selectedappointment.time" name="time" id="time"
+                        class="form-control" required>
+                </div>
+                }
+
+                @if(trainnerService.currentTrainner())
+                {
+                <!-- Hidden Inputs -->
+                <input type="hidden" [(ngModel)]="selectedappointment.id" name="id">
+                <input type="hidden" [(ngModel)]="selectedappointment.adminId" name="adminId">
+                <input type="hidden" [(ngModel)]="selectedappointment.trainnerId" name="trainnerId">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientId" name="clientId">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientcomment" name="clientcomment">
+
+                <div class="mb-3">
+                    <label for="clientcase" class="form-label">Client Case</label>
+                    <input type="text" [(ngModel)]="selectedappointment.clientcase" name="clientcase" id="clientcase"
+                        class="form-control" required>
+                </div>
+
+                <!-- Date Input -->
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input readonly type="date" [(ngModel)]="selectedappointment.date" name="date" id="date"
+                        class="form-control" required>
+                </div>
+
+                <!-- Time Input -->
+                <div class="mb-3">
+                    <label for="time" class="form-label">Time</label>
+                    <input readonly type="time" step="1" [(ngModel)]="selectedappointment.time" name="time" id="time"
+                        class="form-control" required>
+                </div>
+                }
+
+                @if(clientService.currentClient())
+                {
+
+                <div *ngIf="selectedappointment.hasPhoto" class="text-center">
+                    <img class="rounded-circle border border-secondary"
+                        style="width: 200px; height: 200px; object-fit: cover;"
+                        [src]="'https://res.cloudinary.com/dixiryhwa/image/upload/' + selectedappointment.publicId + '.jpg'"
+                        alt="User Image" />
+
+                        <div>
+                    <button type="button" class="btn btn-danger mt-2"
+                        (click)="deletePhoto(selectedappointment.clientId!)" [disabled]="!selectedappointment.publicId">
+                        Delete Photo
+                    </button>
+                    </div>
+                </div>
+
+
+
+                <!-- Hidden Inputs -->
+                <input type="hidden" [(ngModel)]="selectedappointment.id" name="id">
+                <input type="hidden" [(ngModel)]="selectedappointment.adminId" name="adminId">
+                <input type="hidden" [(ngModel)]="selectedappointment.trainnerId" name="trainnerId">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientId" name="clientId">
+                <input type="hidden" [(ngModel)]="selectedappointment.clientcase" name="clientcase">
+
+                <div class="mb-3">
+                    <label for="clientcomment" class="form-label">Client Comment</label>
+                    <input type="text" [(ngModel)]="selectedappointment.clientcomment" name="clientcomment"
+                        id="clientcomment" class="form-control" required>
+                </div>
+
+                <!-- Date Input -->
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input readonly type="date" [(ngModel)]="selectedappointment.date" name="date" id="date"
+                        class="form-control" required>
+                </div>
+
+                <!-- Time Input -->
+                <div class="mb-3">
+                    <label for="time" class="form-label">Time</label>
+                    <input readonly type="time" step="1" [(ngModel)]="selectedappointment.time" name="time" id="time"
+                        class="form-control" required>
+                </div>
+                }
+
+                <!-- Optional Debugging Information -->
+                <div class="mt-3">
+                    <p>Form Value: {{editForm.value | json}}</p>
+                    <p>Form Status: {{editForm.status | json}}</p>
+                </div>
+
+                <!-- Save Button -->
+                <div class="text-center mt-4">
+                    <button [disabled]="!editForm.dirty" type="submit" class="btn btn-success px-5">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+        @if (clientService.currentClient()) {
+        <div class="mt-4">
+            <app-photo-editor [appointmentId]="selectedappointment.id" [trainnerid]="selectedappointment.trainnerId">
+            </app-photo-editor>
+        </div>
+        }
+    </form>
+    }
+</div>

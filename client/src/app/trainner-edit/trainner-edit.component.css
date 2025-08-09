@@ -1,0 +1,50 @@
+/* In your component CSS */
+.gym-container {
+  background: linear-gradient(135deg, #1c1c1c, #2d2d2d);
+  color: #f0f0f0;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  margin-top: 40px;
+}
+
+.gym-form-label {
+  font-weight: bold;
+  color: #ddd;
+}
+
+.gym-input {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 8px;
+}
+
+.gym-input:focus {
+  outline: none;
+  border-color: #00b894;
+  box-shadow: 0 0 8px #00b894;
+}
+
+.gym-btn {
+  background-color: #00b894;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 30px;
+  transition: 0.3s;
+}
+
+.gym-btn:hover {
+  background-color: #019875;
+}
+.gym-background {
+  background-image: url('../../assets/images/1.jpg');
+  background-size: cover;        /* Ensures it covers without stretching */
+  background-position: center;   /* Keeps it centered */
+  background-repeat: no-repeat;  /* Prevents repeating */
+  height: 100vh;                 /* Full screen height */
+  width: 100%;                   /* Full width */
+}
+
