@@ -482,5 +482,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-API/gym.db*
 API/appsettings.json
+API/gym.db
