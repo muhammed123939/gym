@@ -1,0 +1,41 @@
+using api.Data;
+using api.interfaces;
+using api.Services;
+using API.Data;
+using API.helpers;
+using API.interfaces;
+using API.Services;
+using Microsoft.EntityFrameworkCore;
+namespace API.Extensions;
+
+public static class ApplicationServiceExtensions
+{
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services,
+    IConfiguration config)
+    {
+        services.AddControllers();
+        services.AddDbContext<DataContext>(opt =>
+        {
+            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+        });
+
+        services.AddCors();
+
+        services.AddScoped<EmailService>();
+        services.AddScoped<IAdminRepository, AdminRepository>();
+        services.AddScoped<IAppointmentRepository,AppointmentRepository>();
+        services.AddScoped<ITrainnerRepository, TrainnerRepository>();
+        services.AddScoped<IClientRepository, ClientRepository>();
+        services.AddScoped<ItokenService, TokenService>();
+        services.AddScoped<IPhotoService, PhotoService>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+        return services;
+    }
+}
+
+
+
+
+
+
