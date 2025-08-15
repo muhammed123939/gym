@@ -58,3 +58,7 @@ Perfect for gyms looking to automate admin tasks, track member progress, and enh
 
 ---
 
+📬 Contact
+
+Developer: Mohamed Adel
+Email: mohammed123939@miuegypt.edu.eg
