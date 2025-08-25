@@ -7,9 +7,11 @@ namespace API.Data;
 
 public class DataContext(DbContextOptions options) : DbContext(options)
 {
+
     public DbSet<TrainnerClass> TrainnerClasses { get; set; }
 
     public DbSet<Admins> Admin { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
     public DbSet<EmailToken> EmailTokens { get; set; }
 
     public DbSet<Trainners> Trainners { get; set; }

@@ -9,15 +9,24 @@ using API.Controllers;
 using api.interfaces;
 using api.entities;
 using API.Services;
+using API.SignalR;
+using Microsoft.AspNetCore.SignalR;
+
 
 namespace api.Controllers
 {
 
-    public class AppointmentController(DataContext context, ItokenService tokenService, IMapper mapper,
-         IAppointmentRepository appointmentRepository, IPhotoService photoService) : BaseApiController
-
+    public class AppointmentController(
+        DataContext context,
+        ItokenService tokenService,
+        IMapper mapper,
+        IAppointmentRepository appointmentRepository,
+        IPhotoService photoService,
+        NotificationService _notificationService   // ✅ Add here
+    ) : BaseApiController
     {
-        private List<TimeSlot> GenerateTimeSlots(TimeSpan start, TimeSpan end, TimeSpan interval)
+        
+                private List<TimeSlot> GenerateTimeSlots(TimeSpan start, TimeSpan end, TimeSpan interval)
         {
             var slots = new List<TimeSlot>();
             var current = start;
@@ -218,84 +227,69 @@ namespace api.Controllers
         }
 
         [HttpPost("registerappointment")]
-        public async Task<ActionResult> Registerappointments(AppointmentDTO appointmentDTO)
+        public async Task<ActionResult> RegisterAppointment(
+            AppointmentDTO appointmentDTO,
+            [FromServices] IHubContext<NotificationHub> hubContext)
         {
-            // 1. Check if there's a valid schedule for this trainner on that day
+            // 1. Check trainer schedule
             var schedule = await context.Schedules
                 .FirstOrDefaultAsync(s => s.TrainnerId == appointmentDTO.TrainnerId
                     && s.DayOfWeek == appointmentDTO.Date.DayOfWeek);
 
             if (schedule == null)
-            {
-                return BadRequest("Trainner is not scheduled on this day.");
-            }
+                return BadRequest("Trainer is not scheduled on this day.");
 
             var appointmentTime = new TimeOnly(appointmentDTO.Time.Hour, appointmentDTO.Time.Minute);
 
-            // Convert TimeOnly to TimeSpan (ticks based from midnight)
-            TimeSpan appointmentTimeSpan = appointmentTime.ToTimeSpan();
-            TimeSpan scheduleStartTimeSpan = schedule.StartTime;
-            TimeSpan scheduleEndTimeSpan = schedule.EndTime;
+            if (appointmentTime.ToTimeSpan() < schedule.StartTime || appointmentTime.ToTimeSpan() >= schedule.EndTime)
+                return BadRequest("Appointment time is outside of the trainer's working hours.");
 
-            // Check if the appointment time is within the Trainner's working hours
-            if (appointmentTimeSpan < scheduleStartTimeSpan || appointmentTimeSpan >= scheduleEndTimeSpan)
-            {
-                return BadRequest("Appointment time is outside of the trainner's working hours.");
-            }
-
-            var appointmentStart = TimeOnly.FromTimeSpan(appointmentTimeSpan);
-            var appointmentEnd = appointmentStart.AddMinutes(15); // or any custom duration
-
-            // Pull potential conflicts into memory, then filter
-            var appointments = await context.Appointments
-                .Where(a =>
-                    a.TrainnerId == appointmentDTO.TrainnerId &&
-                    a.Date == appointmentDTO.Date)
-                .ToListAsync();
-
-
+            // 2. Check class capacity
             var appointmentCount = await context.Appointments
-                .Where(s => s.TrainnerId == appointmentDTO.TrainnerId && s.ClassId == appointmentDTO.ClassId && s.Date == appointmentDTO.Date)
+                .Where(s => s.TrainnerId == appointmentDTO.TrainnerId
+                            && s.ClassId == appointmentDTO.ClassId
+                            && s.Date == appointmentDTO.Date)
                 .CountAsync();
 
             if (appointmentCount >= 5)
-            {
                 return BadRequest("Class is at full capacity");
-            }
 
-            // 4. All good, map and save the appointment
-            var newappointment = mapper.Map<Appointments>(appointmentDTO);
-            newappointment.AdminId = appointmentDTO.AdminId;
-            newappointment.TrainnerId = appointmentDTO.TrainnerId;
-            newappointment.ClientId = appointmentDTO.ClientId;
-            newappointment.Date = appointmentDTO.Date;
-            newappointment.Time = appointmentDTO.Time;
-            newappointment.ClassId = appointmentDTO.ClassId;
-            newappointment.clientcase = "";
-            newappointment.clientcomment = "";
+            // 3. Map and save appointment
+            var newAppointment = mapper.Map<Appointments>(appointmentDTO);
+            newAppointment.AdminId = appointmentDTO.AdminId;
+            newAppointment.TrainnerId = appointmentDTO.TrainnerId;
+            newAppointment.ClientId = appointmentDTO.ClientId;
+            newAppointment.clientcase = "";
+            newAppointment.clientcomment = "";
 
-            context.Appointments.Add(newappointment);
+            context.Appointments.Add(newAppointment);
 
+            // 4. Add ClientTrainer if not exists
             bool exists = await context.ClientTrainners
-                   .AnyAsync(ct => ct.ClientId == appointmentDTO.ClientId && ct.TrainnerId == appointmentDTO.TrainnerId);
+                .AnyAsync(ct => ct.ClientId == appointmentDTO.ClientId && ct.TrainnerId == appointmentDTO.TrainnerId);
 
             if (!exists)
             {
-                var clientTrainner = new ClientTrainner
+                context.ClientTrainners.Add(new ClientTrainner
                 {
                     ClientId = appointmentDTO.ClientId,
                     TrainnerId = appointmentDTO.TrainnerId
-                };
-
-                context.ClientTrainners.Add(clientTrainner);
+                });
             }
 
-            // 4. Save all changes
             await context.SaveChangesAsync();
 
-            return Ok();
+// Example: Notify client
+            await _notificationService.SendToUser("client", appointmentDTO.ClientId.ToString(), "New appointment booked!");
+
+            // Example: Notify trainer too
+            await _notificationService.SendToUser("trainer", appointmentDTO.TrainnerId.ToString(), "You have a new session scheduled!");
+
+            return Ok(new { message = "Appointment created successfully" });
 
         }
+
+
 
         [HttpGet("getappointment/{id}")]
         public async Task<ActionResult<AppointmentDTO>> getappointment(int id)

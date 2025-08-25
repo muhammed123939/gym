@@ -30,11 +30,45 @@
           <a routerLink="/edittrainner" routerLinkActive="active" class="nav-link text-uppercase">Edit-profile</a>
         </li>
 
-        <li class="nav-item">
-          <a (click)="logouttrainner()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
-            Log Out
-          </a>
-        </li>
+        <!-- Notification -->
+        <ul class="navbar-nav d-flex align-items-center">
+          <li style="margin-left: 100px;" class="nav-item dropdown position-relative" *ngIf="isLoggedIn()">
+            <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              (click)="onBellClick()" style="display: flex; align-items: center; position: relative;">
+              <i class="bi bi-bell" style="font-size: 1.3rem; position: relative; z-index: 1;"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="z-index: 2;">
+                {{ unreadCount }}
+              </span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end p-0" style="width: 300px; max-height: 400px; overflow-y: auto;">
+              <ng-container *ngIf="notificationService.notifications$ | async as notifications">
+                <li *ngIf="!notifications || notifications.length === 0"
+                  class="dropdown-item text-center text-muted py-3">
+                  No notifications
+                </li>
+                <li *ngFor="let note of notifications"
+                  class="dropdown-item d-flex align-items-start py-2 border-bottom">
+                  <i class="bi bi-info-circle me-2" style="font-size: 1.2rem; color: #0d6efd;"></i>
+                  <div class="notification-content">
+                    <div class="fw-bold">{{ note.title || 'Notification' }}</div>
+                    <small class="text-muted">{{ note.message }}</small>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </li>
+
+          <!-- Logout (push to right) -->
+          <li style="position: fixed;" class="nav-item ms-auto">
+            <a (click)="logouttrainner()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
+              Log Out
+            </a>
+          </li>
+
+        </ul>
+
         }
 
         @if (clientService.currentClient()) {
@@ -44,11 +78,46 @@
         <li class="nav-item">
           <a routerLink="/editclient" routerLinkActive="active" class="nav-link text-uppercase">Edit-profile</a>
         </li>
-        <li class="nav-item">
-          <a (click)="logoutclient()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
-            Log Out
-          </a>
-        </li>
+
+        <!-- Notification -->
+        <ul class="navbar-nav d-flex align-items-center">
+          <li style="margin-left: 100px;" class="nav-item dropdown position-relative" *ngIf="isLoggedIn()">
+            <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              (click)="onBellClick()" style="display: flex; align-items: center; position: relative;">
+              <i class="bi bi-bell" style="font-size: 1.3rem; position: relative; z-index: 1;"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="z-index: 2;">
+                {{ unreadCount }}
+              </span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end p-0" style="width: 300px; max-height: 400px; overflow-y: auto;">
+              <ng-container *ngIf="notificationService.notifications$ | async as notifications">
+                <li *ngIf="!notifications || notifications.length === 0"
+                  class="dropdown-item text-center text-muted py-3">
+                  No notifications
+                </li>
+                <li *ngFor="let note of notifications"
+                  class="dropdown-item d-flex align-items-start py-2 border-bottom">
+                  <i class="bi bi-info-circle me-2" style="font-size: 1.2rem; color: #0d6efd;"></i>
+                  <div class="notification-content">
+                    <div class="fw-bold">{{ note.title || 'Notification' }}</div>
+                    <small class="text-muted">{{ note.message }}</small>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </li>
+
+          <!-- Logout (push to right) -->
+          <li style="position: fixed;" class="nav-item ms-auto">
+            <a (click)="logoutclient()" class="nav-link logout-link text-uppercase" style="cursor: pointer;">
+              Log Out
+            </a>
+          </li>
+
+        </ul>
+
         }
 
         @if (adminService.currentAdmin()) {
@@ -93,36 +162,36 @@
             <option value="client">Client</option>
           </select>
         </div>
-<div style="margin-left: 5px;" >
-        <form *ngIf="selectedUserType === 'trainner'" #trainnerForm="ngForm" (ngSubmit)="logintrainner()"
-          class="login-form d-flex align-items-center gap-2" autocomplete="off">
-          <input name="Name" [(ngModel)]="modeltrainner.Name" class="form-control form-control-sm w-auto"
-            placeholder="Trainner Name">
-          <input name="Password" [(ngModel)]="modeltrainner.Password" class="form-control form-control-sm w-auto"
-            placeholder="Password" type="password">
-          <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
-        </form>
+        <div style="margin-left: 5px;">
+          <form *ngIf="selectedUserType === 'trainner'" #trainnerForm="ngForm" (ngSubmit)="logintrainner()"
+            class="login-form d-flex align-items-center gap-2" autocomplete="off">
+            <input name="Name" [(ngModel)]="modeltrainner.Name" class="form-control form-control-sm w-auto"
+              placeholder="Trainner Name">
+            <input name="Password" [(ngModel)]="modeltrainner.Password" class="form-control form-control-sm w-auto"
+              placeholder="Password" type="password">
+            <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
+          </form>
 
-        <form *ngIf="selectedUserType === 'client'" #ClientForm="ngForm" (ngSubmit)="loginclient()"
-          class="login-form d-flex align-items-center gap-2" autocomplete="off">
-          <input name="Name" [(ngModel)]="modelclient.Name" class="form-control form-control-sm w-auto"
-            placeholder="Client Name">
-          <input name="Password" [(ngModel)]="modelclient.Password" class="form-control form-control-sm w-auto"
-            placeholder="Password" type="password">
-          <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
-        </form>
+          <form *ngIf="selectedUserType === 'client'" #ClientForm="ngForm" (ngSubmit)="loginclient()"
+            class="login-form d-flex align-items-center gap-2" autocomplete="off">
+            <input name="Name" [(ngModel)]="modelclient.Name" class="form-control form-control-sm w-auto"
+              placeholder="Client Name">
+            <input name="Password" [(ngModel)]="modelclient.Password" class="form-control form-control-sm w-auto"
+              placeholder="Password" type="password">
+            <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
+          </form>
 
-        <form *ngIf="selectedUserType === 'admin'" #adminForm="ngForm" (ngSubmit)="login()"
-          class="login-form d-flex align-items-center gap-2" autocomplete="off">
-          <input name="Name" [(ngModel)]="model.Name" class="form-control form-control-sm w-auto"
-            placeholder="Admin Name">
-          <input name="Password" [(ngModel)]="model.Password" class="form-control form-control-sm w-auto"
-            placeholder="Password" type="password">
-          <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
-        </form>
-  
-</div>
-  
+          <form *ngIf="selectedUserType === 'admin'" #adminForm="ngForm" (ngSubmit)="login()"
+            class="login-form d-flex align-items-center gap-2" autocomplete="off">
+            <input name="Name" [(ngModel)]="model.Name" class="form-control form-control-sm w-auto"
+              placeholder="Admin Name">
+            <input name="Password" [(ngModel)]="model.Password" class="form-control form-control-sm w-auto"
+              placeholder="Password" type="password">
+            <button class="btn btn-outline-light btn-sm" type="submit">Login</button>
+          </form>
+
+        </div>
+
       </div>
     </div>
   </div>
