@@ -285,6 +285,7 @@ namespace api.Controllers
             // Example: Notify trainer too
             await _notificationService.SendToUser("trainer", appointmentDTO.TrainnerId.ToString(), "You have a new session scheduled!");
 
+         
             return Ok(new { message = "Appointment created successfully" });
 
         }

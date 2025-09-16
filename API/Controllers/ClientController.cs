@@ -14,11 +14,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Net.Mail;
 using api.Services;
+using API.SignalR;
+using Microsoft.AspNetCore.SignalR;
+using API.Services;
 
 namespace API.Controllers
 {
     public class ClientController(EmailService emailService, DataContext context, ItokenService tokenService, IMapper mapper,
-     IClientRepository clientRepository , IPhotoService photoService ) : BaseApiController
+     IClientRepository clientRepository , IPhotoService photoService , NotificationService _notificationService  ) : BaseApiController
     {
 
         [HttpGet("appointmentsbyclient/{trainnerId}")]
@@ -267,7 +270,7 @@ namespace API.Controllers
         }
 
         [HttpPost("clientregister")]
-        public async Task<ActionResult> Registerclient(RegisterClientDTO registerDTo)
+        public async Task<ActionResult> Registerclient(RegisterClientDTO registerDTo , [FromServices] IHubContext<NotificationHub> hubContext)
         {
             if (await MobileExists(registerDTo.mobile)) return BadRequest("mobile number taken");
             if (await nationanumExists(registerDTo.nationalNumber)) return BadRequest("national number taken");
@@ -313,6 +316,10 @@ namespace API.Controllers
                 $"<h3>Welcome {newclient.Name}!</h3><p>Click <a href='{link}'>here</a> to verify your email.</p>"
             );
 
+            // Example: Notify client
+            await _notificationService.SendToUser("client", newclient.Id.ToString(), "check your mail to verify it ");
+
+         
             return Ok(new { message = "Registration successful. Check your email to verify your account." });
 
         }
